@@ -2,30 +2,25 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var vm = ResultadosViewModel()
-    @State private var seccion: Seccion = .resultados
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            seccionActual
-            MenuFlotante(seleccion: $seccion)
-                .padding(.bottom, 6)
-        }
-        .task {
-            if vm.candidatos.isEmpty {
-                await vm.cargar()
+        TabView {
+            Tab("Resultados", systemImage: "chart.bar.fill") {
+                ResultadosView(vm: vm)
+            }
+            Tab("Avance", systemImage: "chart.pie.fill") {
+                AvanceView(vm: vm)
+            }
+            Tab("Proceso", systemImage: "info.circle.fill") {
+                ProcesoView(vm: vm)
             }
         }
-    }
-
-    @ViewBuilder
-    private var seccionActual: some View {
-        switch seccion {
-        case .resultados:
-            ResultadosView(vm: vm)
-        case .avance:
-            AvanceView(vm: vm)
-        case .proceso:
-            ProcesoView(vm: vm)
+        .task {
+            await vm.cargar()
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(300))
+                await vm.cargar()
+            }
         }
     }
 }

@@ -22,9 +22,12 @@ final class ResultadosViewModel {
 
             let (lista, resumen, info) = try await (participantes, totales, proceso)
 
-            self.candidatos = lista.sorted { $0.porcentajeVotosValidos > $1.porcentajeVotosValidos }
+            let ordenados = lista.sorted { $0.porcentajeVotosValidos > $1.porcentajeVotosValidos }
+            self.candidatos = ordenados
             self.totales = resumen
             self.proceso = info
+
+            Task { await Compartido.publicar(candidatos: ordenados, totales: resumen) }
         } catch {
             self.error = error.localizedDescription
         }
