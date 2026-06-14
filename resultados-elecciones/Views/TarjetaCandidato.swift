@@ -75,7 +75,7 @@ struct TarjetaCandidato: View {
     private var estadisticas: some View {
         VStack(spacing: 14) {
             HStack(alignment: .firstTextBaseline, spacing: 3) {
-                Text(candidato.porcentajeVotosValidos, format: .number.precision(.fractionLength(2)))
+                Text(candidato.porcentajeVotosValidos, format: .number.precision(.fractionLength(3)))
                     .font(.system(size: 38, weight: .heavy, design: .rounded))
                     .foregroundStyle(color)
                 Text("%")

@@ -105,10 +105,10 @@ struct VistaWidget: View {
             }
             barra(a, b)
             HStack {
-                Text(a.porcentaje, format: .number.precision(.fractionLength(1)))
+                Text(a.porcentaje, format: .number.precision(.fractionLength(3)))
                     .foregroundStyle(colorPartido(a.id))
                 Spacer()
-                Text(b.porcentaje, format: .number.precision(.fractionLength(1)))
+                Text(b.porcentaje, format: .number.precision(.fractionLength(3)))
                     .foregroundStyle(colorPartido(b.id))
             }
             .font(.caption.weight(.bold))
@@ -135,7 +135,7 @@ struct VistaWidget: View {
                 .foregroundStyle(.primary)
                 .lineLimit(1)
             HStack(alignment: .firstTextBaseline, spacing: 1) {
-                Text(c.porcentaje, format: .number.precision(.fractionLength(2)))
+                Text(c.porcentaje, format: .number.precision(.fractionLength(3)))
                     .font(.title3.weight(.heavy))
                 Text("%")
                     .font(.caption2.weight(.bold))
